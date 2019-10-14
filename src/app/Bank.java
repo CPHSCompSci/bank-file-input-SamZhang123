@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Bank {
 	// Variable for logging/not logging
-	private static final boolean LOG = true;
+	private static final boolean LOG = false;
 
 	private static int accountCounter = 1;
 	private String name;
@@ -16,7 +16,7 @@ public class Bank {
 
 	public Bank(String name) {
 		this.name = name;
-		accounts = new ArrayList<>();
+		accounts = new ArrayList<Account>();
 		log("Bank Created");
 	}
 
@@ -75,6 +75,24 @@ public class Bank {
 		return account.balance;
 	}
 
+        public boolean Transfer(int accountnumber1, int accountnumber2, int amount)
+        {
+            if(amount>=0)
+            {
+                Account account1 = findAccount(accountnumber1);
+                Account account2 = findAccount(accountnumber2);
+                if(account1!=null && account2!=null &&account1.balance>=amount)
+                {
+                    account1.balance-=amount;
+                    account2.balance+=amount;
+                    log("Tansfered "+amount+" from "+accountnumber1+" to "+accountnumber2+".");
+                    return true;
+                }
+            }
+            log("Failed to tansfered "+amount+" from "+accountnumber1+" to "+accountnumber2+".");
+            return false;
+        }
+        
 	public void saveAccounts(String filename) {
 		// TODO
 		log("Save not yet implemented.");
