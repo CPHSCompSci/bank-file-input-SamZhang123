@@ -1,5 +1,6 @@
 package app;
 import java.util.Scanner;
+import java.io.*;
 public class Main 
 {
     public static void main(String[] args) 
@@ -7,17 +8,37 @@ public class Main
 	Bank bank = new Bank("bank");
         int menu;
         do{
-            System.out.println("Enter 1 to Deposite.");
-            System.out.println("Enter 2 to Withdraw.");
-            System.out.println("Enter 3 to Check Balance.");
+            System.out.println("Enter 0 to load or save account.");
+            System.out.println("Enter 1 to deposite.");
+            System.out.println("Enter 2 to withdraw.");
+            System.out.println("Enter 3 to check Balance.");
             System.out.println("Enter 4 to create new account.");
             System.out.println("Enter 5 to close account.");
             System.out.println("Enter 6 to transfer money to another account.");
             System.out.println("Enter anything else will result in quit.");
-            menu = inputI("Enter here");
+            menu = inputI("Enter here:");
             System.out.println("---------------------------------------------");
             switch(menu)
             {
+                case 0:
+                    String name0 = inputS("Enter account name:");
+                    String operation = inputS("Enter load to load, enter save to save:");
+                    if(operation.equalsIgnoreCase("load"))
+                    {
+                        bank.loadAccounts(name0);
+                        System.out.println("Account loaded.");
+                    }
+                    else if(operation.equalsIgnoreCase("save"))
+                    {
+                        bank.saveAccounts(name0);
+                        System.out.println("Account saved.");
+                    }
+                    else
+                    {
+                        System.out.println("Can not regongnize operation.");
+                    }
+                    System.out.println("---------------------------------------------");
+                    break;
                 case 1:
                     int accountnumber1 = inputI("Input account number:");
                     int amount1 = inputI("Input amount:");
@@ -96,7 +117,7 @@ public class Main
                 default:
                     break;
             }
-        }while(menu>=1 && menu<=6);
+        }while(menu>=0 && menu<=6);
     }
     public static boolean inputB(String s)
     {

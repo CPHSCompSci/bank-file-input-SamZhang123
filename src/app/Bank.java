@@ -1,7 +1,7 @@
 package app;
-
 import java.util.ArrayList;
-
+import java.util.Scanner;
+import java.io.*;
 public class Bank {
 	// Variable for logging/not logging
 	private static final boolean LOG = false;
@@ -93,14 +93,43 @@ public class Bank {
             return false;
         }
         
-	public void saveAccounts(String filename) {
-		// TODO
-		log("Save not yet implemented.");
+	public void saveAccounts(String filename) 
+        {
+            try
+            {
+                for(Account a: accounts)
+                {
+                    FileWriter fw = new FileWriter(filename);
+                    String message = a.toString();
+                    fw.append(message);
+                    fw.close();
+                }
+            }catch(IOException e)
+            {
+                e.printStackTrace();
+            }
 	}
 
-	public void loadAccounts(String filename) {
-		// TODO
-		log("Load not yet implemented.");
+	public void loadAccounts(String filename) 
+        {
+            try
+            {
+                Scanner filescan = new Scanner(new File(filename));
+                while(filescan.hasNextLine())
+                {
+                    String line = filescan.nextLine();
+                    String[] split = line.split("::");
+                    int accountnum  = Integer.parseInt(split[0].substring(1));
+                    String accountname = split[1];
+                    int amount = Integer.parseInt(split[2].substring(1, split[2].length()-1));
+                    Account a = new Account(accountnum,accountname,amount);
+                    accounts.add(a);
+                }
+                filescan.close();
+            }catch(IOException e)
+            {
+                e.printStackTrace();
+            }
 	}
 
 	private Account findAccount(int accountNumber) {
@@ -130,7 +159,12 @@ public class Bank {
 			balance = 0;
 			accountNumber = accountCounter++;
 		}
-
+                private Account(int accountNumber,String name,int balance)
+                {
+                    this.name=name;
+                    this.balance=balance;
+                    this.accountNumber=accountNumber;
+                }
 		public String toString() {
 			return "{" + accountNumber + "::" + name + "::$" + balance + "}";
 		}
