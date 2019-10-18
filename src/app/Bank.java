@@ -95,18 +95,33 @@ public class Bank {
         
 	public void saveAccounts(String filename) 
         {
-            try
+            boolean f=false;
+            int x = 0;
+            for(int i=0; i<accounts.size() && !f;i++)
             {
-                for(Account a: accounts)
+                if(accounts.get(i).name.equals(filename))
+                {
+                    f = true;
+                    x=i;
+                }
+            }
+            if(f)
+            {
+                try
                 {
                     FileWriter fw = new FileWriter(filename);
-                    String message = a.toString();
+                    String message = accounts.get(x).toString();
                     fw.append(message);
                     fw.close();
+                    System.out.println("Account saved.");
+                }catch(IOException e)
+                {
+                    e.printStackTrace();
                 }
-            }catch(IOException e)
+            }
+            else
             {
-                e.printStackTrace();
+                System.out.println("Failed to save account.");
             }
 	}
 

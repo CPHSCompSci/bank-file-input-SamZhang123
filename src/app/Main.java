@@ -31,7 +31,6 @@ public class Main
                     else if(operation.equalsIgnoreCase("save"))
                     {
                         bank.saveAccounts(name0);
-                        System.out.println("Account saved.");
                     }
                     else
                     {
