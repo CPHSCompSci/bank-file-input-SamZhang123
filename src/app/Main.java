@@ -26,7 +26,6 @@ public class Main
                     if(operation.equalsIgnoreCase("load"))
                     {
                         bank.loadAccounts(name0);
-                        System.out.println("Account loaded.");
                     }
                     else if(operation.equalsIgnoreCase("save"))
                     {

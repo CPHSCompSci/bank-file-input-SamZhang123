@@ -129,18 +129,27 @@ public class Bank {
         {
             try
             {
-                Scanner filescan = new Scanner(new File(filename));
-                while(filescan.hasNextLine())
+                File x = new File(filename);
+                if(x.exists())
                 {
-                    String line = filescan.nextLine();
-                    String[] split = line.split("::");
-                    int accountnum  = Integer.parseInt(split[0].substring(1));
-                    String accountname = split[1];
-                    int amount = Integer.parseInt(split[2].substring(1, split[2].length()-1));
-                    Account a = new Account(accountnum,accountname,amount);
-                    accounts.add(a);
+                    Scanner filescan = new Scanner(x);
+                    while(filescan.hasNextLine())
+                    {
+                        String line = filescan.nextLine();
+                        String[] split = line.split("::");
+                        int accountnum  = Integer.parseInt(split[0].substring(1));
+                        String accountname = split[1];
+                        int amount = Integer.parseInt(split[2].substring(1, split[2].length()-1));
+                        Account a = new Account(accountnum,accountname,amount);
+                        accounts.add(a);
+                        System.out.println("Load success.");
+                    }
+                    filescan.close();
                 }
-                filescan.close();
+                else
+                {
+                    System.out.println("Failed to load.");
+                }
             }catch(IOException e)
             {
                 e.printStackTrace();
